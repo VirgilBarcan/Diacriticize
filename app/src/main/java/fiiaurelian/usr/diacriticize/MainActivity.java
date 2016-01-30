@@ -1,6 +1,8 @@
 package fiiaurelian.usr.diacriticize;
 
-import android.support.design.widget.FloatingActionButton;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private FloatingActionMenu floatingActionMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +34,48 @@ public class MainActivity extends AppCompatActivity {
         //        TableRow.LayoutParams.MATCH_PARENT));
         //linearLayout.addView(inputText);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_button);
+        floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floating_action_menu);
+        createFloatingActionButtons();
+
+        /*
+        final FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_diacritics);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Click action
+                //close floating action menu
+                floatingActionMenu.close(true);
+
                 addAccents(view);
             }
         });
+        */
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    private void createFloatingActionButtons() {
+        FloatingActionButton fabAddDiacritics = new FloatingActionButton(this);
+        fabAddDiacritics.setImageResource(R.drawable.ic_action_add);
+        fabAddDiacritics.setButtonSize(FloatingActionButton.SIZE_MINI);
+        fabAddDiacritics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //close floating action menu
+                floatingActionMenu.close(true);
+
+                addAccents(view);
+            }
+        });
+
+        FloatingActionButton fabCopyToClipboard = new FloatingActionButton(this);
+        fabCopyToClipboard.setImageResource(R.drawable.ic_action_copy);
+        fabCopyToClipboard.setButtonSize(FloatingActionButton.SIZE_MINI);
+
+        floatingActionMenu.addMenuButton(fabCopyToClipboard);
+        floatingActionMenu.addMenuButton(fabAddDiacritics);
     }
 
     public void addAccents(View btn) {
