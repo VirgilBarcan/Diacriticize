@@ -103,6 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor;
 
         try {
+            word = WordUtils.flattenToAscii(word);
             cursor = db.query(WORD_TABLE, new String[] {DIACRITICS}, SIMPLE + "=?", new String[] {word}, null, null, null);
             if(cursor != null) {
                 cursor.moveToFirst();
